@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { StoreProvider } from "easy-peasy";
-import { UserStore } from "./store";
+import { UserStore } from "./store/UserModel";
 import Router from "./router";
 
 const App = () => {

@@ -1,18 +1,41 @@
 import React from "react";
 import "./Login.css";
+import { AuthWrapper } from "../../models/models";
+import { useStoreActions, useStoreState } from "../../store/UserModelStore";
+import { useNavigate } from "react-router-dom";
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
   // Objects
+  const loginUser = useStoreActions((actions) => actions.loginUser);
+  const user = useStoreState((state) => state.user);
+  const reLoginUser = useStoreActions((action) => action.reLoginUser);
+  const navigate = useNavigate();
 
   // Variables
 
   // State Variables - Hooks
+  const [auth, setAuth] = React.useState<AuthWrapper>({
+    password: "",
+    username: "",
+  });
 
   // Functions
 
   // Hook Functions
+  React.useEffect(() => {
+    if (user._id !== "") {
+      navigate("/");
+    } else if (
+      window.localStorage.getItem("token") &&
+      window.localStorage.getItem("token") !== ""
+    ) {
+      reLoginUser(window.localStorage.getItem("token")!);
+    } else {
+      navigate("/login");
+    }
+  }, [user]);
 
   return (
     <div
@@ -28,6 +51,7 @@ const Login: React.FC<LoginProps> = () => {
           <div className={"mt-[5px] w-full"}>
             <input
               type={"text"}
+              onChange={(e) => setAuth({ ...auth, username: e.target.value })}
               className={
                 "text-black text-[12px] outline-none w-full px-[10px] py-[6px] rounded-[4px]"
               }
@@ -39,6 +63,7 @@ const Login: React.FC<LoginProps> = () => {
           <div className={"font-bold text-[10px]"}>Password</div>
           <div className={"mt-[5px] w-full"}>
             <input
+              onChange={(e) => setAuth({ ...auth, password: e.target.value })}
               type={"password"}
               className={
                 "text-black text-[12px] outline-none w-full px-[10px] py-[6px] rounded-[4px]"
@@ -47,13 +72,17 @@ const Login: React.FC<LoginProps> = () => {
           </div>
         </div>
         <div className={"my-[10px]"}>
-          <div
+          <button
             className={
               "mt-[5px] text-[12px] bg-primary cursor-pointer select-none rounded-[4px] px-[16px] py-[6px]"
             }
+            onClick={async () => {
+              await loginUser(auth);
+              navigate("/");
+            }}
           >
             Submit
-          </div>
+          </button>
         </div>
       </div>
       <div className={"flex w-2/3 h-full"}>

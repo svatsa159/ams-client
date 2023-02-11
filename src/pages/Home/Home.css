@@ -1,0 +1,18 @@
+.attendance-present{
+    background-color: #b2dc6a !important;
+    border: white solid 1px !important;
+    border-radius: 4px;
+}
+
+.attendance-absent{
+    background-color: #dc6a6a !important;
+    border-radius: 4px;
+    border: white solid 1px !important;
+}
+
+.react-calendar{
+    width: 50% !important;
+    border-radius: 8px;
+    border: none;
+    padding: 20px;
+}
