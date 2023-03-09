@@ -1,7 +1,7 @@
 import { RegisterUserWrapper, User } from "../models/models";
 import { CITY, YEAR } from "./enums";
 
-export const URL = "http://localhost:8080";
+export const URL = "https://server-ams.onrender.com";
 
 export const emptyUser: User = {
   _id: "",
